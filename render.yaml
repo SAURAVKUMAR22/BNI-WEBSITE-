@@ -1,0 +1,20 @@
+# One-click deploy on Render (https://render.com): New > Blueprint > pick this repo.
+# NOTE: a persistent disk needs a paid Render plan. Without it, saved asks and uploads are lost on every restart.
+services:
+  - type: web
+    name: bni-ask-editor
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 2 --threads 4 --timeout 120 -b 0.0.0.0:$PORT app:app
+    disk:
+      name: bni-data
+      mountPath: /var/data
+      sizeGB: 5
+    envVars:
+      - key: BNI_DATA_DIR
+        value: /var/data
+      - key: BNI_ADMIN_KEY
+        generateValue: true
+      - key: BNI_VIEWER_KEY
+        generateValue: true

@@ -1,0 +1,12 @@
+# secrets + live data: never commit
+data/
+*.db
+*.db-wal
+*.db-shm
+admin_key.txt
+viewer_key.txt
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
